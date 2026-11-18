@@ -32,12 +32,18 @@ export default function Header({
           <Image source={LOGO} style={s.logoImagem} />
         </View>
         <Text style={s.nome}>André Lanches</Text>
-        <Pressable style={s.icone} onPress={onConfig} accessibilityLabel="Configurações">
+        <Pressable
+          style={s.icone}
+          onPress={onConfig}
+          accessibilityRole="button"
+          accessibilityLabel="Configurações"
+        >
           <Ionicons name="settings-outline" size={24} color={cores.onPrimary} />
         </Pressable>
         <Pressable
           style={s.icone}
           onPress={onCarrinho}
+          accessibilityRole="button"
           accessibilityLabel={`Seu pedido, ${quantidade} itens`}
         >
           <Ionicons name="cart-outline" size={26} color={cores.onPrimary} />

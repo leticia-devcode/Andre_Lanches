@@ -1,4 +1,4 @@
-import { supabase } from '../lib/supabase';
+import { obterSupabase } from '../lib/supabase';
 import type { PayloadPedido } from '../domain/tipos';
 
 // ─────────────────────────────────────────────
@@ -19,6 +19,7 @@ const MENSAGEM_ERRO_PEDIDO = 'Não foi possível registrar o pedido no sistema.'
  * @throws Error com mensagem amigável se a gravação falhar.
  */
 export async function criarPedido(payload: PayloadPedido): Promise<number> {
+  const supabase = obterSupabase();
   const { data, error } = await supabase.rpc('criar_pedido', { p: payload });
 
   if (error) {

@@ -1,7 +1,7 @@
 {
   "name": "andre_lanches",
   "version": "1.0.0",
-  "main": "expo-router/entry",
+  "main": "index.ts",
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",
     "@hookform/resolvers": "^7.0.7",

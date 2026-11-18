@@ -1,4 +1,4 @@
-import { supabase } from '../lib/supabase';
+import { obterSupabase } from '../lib/supabase';
 import type { Produto } from '../domain/tipos';
 
 // ─────────────────────────────────────────────
@@ -24,6 +24,7 @@ const MENSAGEM_ERRO_CARDAPIO =
  * @throws Error com mensagem amigável se a consulta falhar.
  */
 export async function listarProdutos(): Promise<Produto[]> {
+  const supabase = obterSupabase();
   const { data, error } = await supabase
     .from('produtos')
     .select(COLUNAS_PRODUTO)

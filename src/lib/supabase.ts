@@ -1,5 +1,5 @@
 import 'react-native-url-polyfill/auto';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 // ─────────────────────────────────────────────
 // Variáveis de ambiente
@@ -8,22 +8,24 @@ import { createClient } from '@supabase/supabase-js';
 const url = process.env.EXPO_PUBLIC_SUPABASE_URL;
 const chave = process.env.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
-// Depois deste if, o TypeScript sabe que url e chave são texto (não undefined).
-if (!url || !chave) {
-  throw new Error(
-    'Variáveis do Supabase não encontradas. Confira o arquivo .env e ' +
-      'reinicie o servidor com: npx expo start -c',
-  );
+const MENSAGEM_CONFIGURACAO =
+  'Variáveis do Supabase não encontradas. Confira o arquivo .env e reinicie o servidor com: npx expo start -c';
+let cliente: SupabaseClient | null = null;
+
+/** Cria o cliente somente quando um serviço precisar acessar o Supabase. */
+export function obterSupabase(): SupabaseClient {
+  if (!url || !chave) {
+    throw new Error(MENSAGEM_CONFIGURACAO);
+  }
+
+  if (!cliente) {
+    cliente = createClient(url, chave, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+      },
+    });
+  }
+
+  return cliente;
 }
-
-// ─────────────────────────────────────────────
-// Cliente
-// ─────────────────────────────────────────────
-
-/** Cliente do Supabase. App sem login: não guardamos sessão nem renovamos tokens. */
-export const supabase = createClient(url, chave, {
-  auth: {
-    persistSession: false,
-    autoRefreshToken: false,
-  },
-});

@@ -1,4 +1,4 @@
-import { supabase } from '../lib/supabase';
+import { obterSupabase } from '../lib/supabase';
 import type { Promocao } from '../domain/tipos';
 
 // ─────────────────────────────────────────────
@@ -22,6 +22,7 @@ const MENSAGEM_ERRO_PROMOCAO =
  * @throws Error com mensagem amigável se a consulta falhar.
  */
 export async function buscarPromocaoAtiva(): Promise<Promocao | null> {
+  const supabase = obterSupabase();
   const { data, error } = await supabase
     .from('promocoes')
     .select(COLUNAS_PROMOCAO)

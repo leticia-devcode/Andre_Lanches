@@ -1,4 +1,4 @@
-import { supabase } from '../lib/supabase';
+import { obterSupabase } from '../lib/supabase';
 import type { DadosContato } from '../domain/tipos';
 
 // ─────────────────────────────────────────────
@@ -25,6 +25,7 @@ export async function enviarContato({
   contato,
   mensagem,
 }: DadosContato): Promise<void> {
+  const supabase = obterSupabase();
   const { error } = await supabase.from('contatos').insert({
     nome: nome.trim(),
     contato: contato.trim(),
